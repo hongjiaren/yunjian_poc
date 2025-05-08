@@ -49,17 +49,7 @@ def image_to_data_url(image_data, mime_type=None):
 
 
 def analyze_with_azure_gpt4v(image_data, prompt="请描述这张图片的内容。", detail_level="auto"):
-    """
-    使用 Azure 上的 GPT-4 Vision 模型分析图片。
-    
-    参数：
-        image_data: 图片的二进制数据（bytes）
-        prompt: 用户提示词
-        detail_level: 图像处理细节级别（low/high/auto）
 
-    返回：
-        str: 模型的文本回应，失败时返回错误信息
-    """
     print("🧠 正在调用 Azure 上的 GPT-4 Vision 进行图像分析...")
 
     # 将图片转为 data:image;base64,...
