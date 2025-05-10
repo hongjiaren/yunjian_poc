@@ -19,14 +19,19 @@ app = Flask(__name__)
 def image_recognition():
     app.logger.info("收到/image_recognition请求")
 
+    # 检查请求中是否包含文件部分
     if 'file' not in request.files:
         app.logger.error('请求中不包含文件部分')
         return jsonify({'error': 'No file part in the request'}), 400
     file = request.files['file']
 
+    # 检查是否有文件被上传
     if file.filename == '':
         app.logger.error('未选择任何文件')
         return jsonify({'error': 'No selected file'}), 400
+
+    # 获取 query 参数
+    query = request.form.get('query', '')
 
     if file:
         try:
@@ -34,16 +39,15 @@ def image_recognition():
             img_bytes = file.read()
             app.logger.info(f"成功接收到文件 {file.filename}，大小: {len(img_bytes)} 字节")
 
-            # 调用图像分析模型
-            result = analyze_with_qwen_vl(img_bytes)
+            # 调用图像分析模型，同时传递 query 参数
+            answer = analyze_with_qwen_vl(img_bytes, query=query)
 
-            if result is None:
+            if answer is None:
                 return jsonify({'error': '图像分析失败，请检查输入或模型服务'}), 500
 
             # 返回分析结果
             return jsonify({
-                "message": "文件上传并分析完成",
-                "result": result
+                "answer": answer
             }), 200
 
         except Exception as e:
@@ -52,23 +56,22 @@ def image_recognition():
 
 
 
-
 @app.route('/test_process', methods=['POST'])
 def test_process():
     app.logger.info("收到 /test_process 请求")
 
     data = request.get_json()
-    if not data or 'question' not in data:
-        app.logger.error("请求中缺少 'question' 字段")
-        return jsonify({'error': 'Missing "question" field in the request'}), 400
+    if not data or 'query' not in data:
+        app.logger.error("请求中缺少 'query' 字段")
+        return jsonify({'error': 'Missing "query" field in the request'}), 400
 
-    question = data['question']
-    app.logger.info(f"接收到的问题: {question}")
+    query = data['query']
+    app.logger.info(f"接收到的问题: {query}")
 
     # 构造请求体
     payload = {
         "inputs": {},
-        "query": question,
+        "query": query,
         "response_mode": "blocking",
         "conversation_id": "",
         "user": "abc-123"

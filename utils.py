@@ -16,11 +16,11 @@ def image_to_data_url(image_data, mime_type=None):
     encoded = encode_image(image_data)
     return f"data:{mime_type};base64,{encoded}"
 
-def analyze_with_qwen_vl(image_data):
+def analyze_with_qwen_vl(image_data, query):
     print("🧠 正在调用本地的qwen2.5vl进行图像分析...")
     
     # 定义固定的提示信息或根据需求动态生成
-    prompt = HARDWARE_ANALYSIS_PROMPT
+    prompt = HARDWARE_ANALYSIS_PROMPT.format(query=query)
     
     image_url = image_to_data_url(image_data)
     openai_api_key = "EMPTY"
