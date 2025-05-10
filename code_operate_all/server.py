@@ -10,7 +10,7 @@ from docx import Document
 from docx.oxml.ns import qn
 from lxml import etree
 import re
-from tool import extract_images_and_find_target
+from code_operate_all.tool import extract_images_and_find_target
 from dashscope import MultiModalConversation
 from http import HTTPStatus
 from openai import OpenAI

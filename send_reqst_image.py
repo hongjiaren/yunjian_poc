@@ -1,6 +1,6 @@
 import requests
 url = 'http://localhost:5005/image_recognition'
-files = {'file': open('/Users/oliver/Desktop/yunjian_poc/组网图.jpg', 'rb')}
+files = {'file': open('test/组网图.jpg', 'rb')}
 data = {
     "query": """1、图中标注为SD6881的模块为被测设备。
         2、需要用到1个USB，图中未画出。
