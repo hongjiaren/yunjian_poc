@@ -11,5 +11,5 @@ data = {
 }
 response = requests.post(url, files=files, data=data)
 
-print(response.text)
+print("状态码:", response.status_code)
 print("响应内容:", response.json())

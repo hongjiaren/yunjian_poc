@@ -97,7 +97,7 @@ def test_process():
         # 解析知识库服务的结果
         answer = response.json()['answer']
 
-        clean_answer=answer.strip().replace('```json', '').replace('\n', '').replace('```', '')
+        clean_answer=answer.strip().replace('```json', '').replace('\n', '').replace('```', '').replace(' ','')
         # 处理企业大脑知识库检索后返回的内容
         print(clean_answer)
 
